@@ -9,7 +9,7 @@
 @prefix ma: <http://www.w3.org/ns/ma-ont#> .
 
 <https://Olympic.univ-paris8.fr/onto/olympic#> a owl:Ontology ;
-    dcterms:title "Resultat des jeux Olympique" .
+    dcterms:title "Resultats des jeux Olympique" .
 
 olympic:Athlete a rdfs:Class ;
     rdfs:label "Athlete" ;
