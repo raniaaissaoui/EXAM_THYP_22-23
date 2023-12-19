@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAVASCRIPT</title>
+    <title>Lire les fichiers depuis une URL</title>
+</head>
+<body>
+
+<input type="file" id="fileInput" multiple>
+<button onclick="readFiles()">Lire les fichiers</button>
+<div id="output"></div>
+
+<script>
+function readFiles() {
+    // Récupérer l'élément input de type fichier
+    var fileInput = document.getElementById('fileInput');
+    
+    // Vérifier si des fichiers ont été sélectionnés
+    if (fileInput.files.length > 0) {
+        // Obtenir la div de sortie
+        var outputDiv = document.getElementById('output');
+        
+        // Réinitialiser le contenu de la div de sortie
+        outputDiv.innerHTML = '';
+        
+        // Parcourir tous les fichiers sélectionnés
+        for (var i = 0; i < fileInput.files.length; i++) {
+            var file = fileInput.files[i];
+            
+            // Créer un objet FileReader
+            var reader = new FileReader();
+            
+            // Définir la fonction de rappel pour la lecture du fichier
+            reader.onload = function (e) {
+                // Afficher le contenu du fichier dans la div de sortie
+                outputDiv.innerHTML += '<p><strong>' + file.name + ':</strong></p><pre>' + e.target.result + '</pre>';
+            };
+            
+            // Lire le fichier en tant que texte
+            reader.readAsText(file);
+        }
+    } else {
+        alert('Veuillez sélectionner au moins un fichier.');
+    }
+}
+</script>
+
+</body>
+</html>
