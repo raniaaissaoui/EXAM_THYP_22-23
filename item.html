@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://use.fontawesome.com/2ddc4a0f9c.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <h4 style="text-align: center;">Item</h4>
+
+    <div class="row">
+      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="itemSelect">
+        <option value="Select an Item">Select an Item</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="itemDetails"></div>
+  </div>
+
+  <script>
+    const apiUrl = "http://localhost/omeka/omeka-s/api/items";
+
+    // Fetch data and populate the dropdown
+    function populateDropdown(url) {
+      d3.json(url, function (error, data) {
+        if (error) throw error;
+
+        const select = d3.select('#itemSelect');
+        const options = select.selectAll('option').data(data);
+
+        options.enter()
+          .append('option')
+          .attr('value', (d) => d["o:id"])
+          .text((d) => d["o:id"]);
+
+        options.exit().remove();
+      });
+    }
+
+    // Show item details based on the selected ID
+    function showItemDetails(selectedId) {
+      const detailsDiv = d3.select('#itemDetails');
+      detailsDiv.html(""); // Clear previous details
+
+      if (selectedId !== "Select an Item") {
+        const selectedUrl = apiUrl + `/${selectedId}`;
+        d3.json(selectedUrl, function (error, itemData) {
+          if (error) throw error;
+
+          detailsDiv.append('h4').text(`Item ID: ${itemData["o:id"]}`);
+          detailsDiv.append('h3').text(`Title: ${itemData["o:title"]}`);
+          detailsDiv.append('h4').text(`Media: ${itemData["o:media"][0]["@id"]["o:title"]}`);
+          // Add more details as needed
+        });
+      }
+    }
+
+    // Initial data population and event handling
+    populateDropdown(apiUrl);
+
+    d3.select('#itemSelect').on('change', function () {
+      const selectedId = this.value;
+      showItemDetails(selectedId);
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
