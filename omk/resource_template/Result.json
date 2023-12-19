@@ -1,0 +1,41 @@
+{
+    "o:label": "Result",
+    "o:resource_template_property": [
+        {
+            "o:alternate_label": null,
+            "o:alternate_comment": null,
+            "o:is_required": false,
+            "o:is_private": false,
+            "o:default_lang": null,
+            "data_types": [],
+            "vocabulary_namespace_uri": "https:\/\/Olympic.univ-paris8.fr\/onto\/olympic#",
+            "vocabulary_label": "Resultats des jeux Olympique",
+            "local_name": "resultUnit",
+            "label": "Result Unit"
+        },
+        {
+            "o:alternate_label": null,
+            "o:alternate_comment": null,
+            "o:is_required": false,
+            "o:is_private": false,
+            "o:default_lang": null,
+            "data_types": [],
+            "vocabulary_namespace_uri": "https:\/\/Olympic.univ-paris8.fr\/onto\/olympic#",
+            "vocabulary_label": "Resultats des jeux Olympique",
+            "local_name": "resultDate",
+            "label": "Result Date"
+        },
+        {
+            "o:alternate_label": null,
+            "o:alternate_comment": null,
+            "o:is_required": false,
+            "o:is_private": false,
+            "o:default_lang": null,
+            "data_types": [],
+            "vocabulary_namespace_uri": "https:\/\/Olympic.univ-paris8.fr\/onto\/olympic#",
+            "vocabulary_label": "Resultats des jeux Olympique",
+            "local_name": "resultValue",
+            "label": "Result Value"
+        }
+    ]
+}
