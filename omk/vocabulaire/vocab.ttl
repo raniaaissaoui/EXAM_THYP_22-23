@@ -1,0 +1,67 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix o: <http://omeka.org/s/vocabs/o#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix olympic: <https://Olympic.univ-paris8.fr/onto/olympic#> .
+@prefix ma: <http://www.w3.org/ns/ma-ont#> .
+
+<https://Olympic.univ-paris8.fr/onto/olympic#> a owl:Ontology ;
+    dcterms:title "Resultat des jeux Olympique" .
+
+olympic:Athlete a rdfs:Class ;
+    rdfs:label "Athlete" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:Sport a rdfs:Class ;
+    rdfs:label "Sport" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:Event a rdfs:Class ;
+    rdfs:label "Event" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:Result a rdfs:Class ;
+    rdfs:label "Result" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:athleteId a rdf:Property ;
+    rdfs:label "Athlete ID" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:athleteName a rdf:Property ;
+    rdfs:label "Athlete Name" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:sportName a rdf:Property ;
+    rdfs:label "Sport Name" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:eventName a rdf:Property ;
+    rdfs:label "Event Name" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:resultValue a rdf:Property ;
+    rdfs:label "Result Value" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:resultUnit a rdf:Property ;
+    rdfs:label "Result Unit" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
+
+olympic:resultDate a rdf:Property ;
+    rdfs:label "Result Date" ;
+    rdfs:domain o:Resource ;
+    vs:term_status "experimental" .
