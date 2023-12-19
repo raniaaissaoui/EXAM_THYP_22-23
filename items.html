@@ -4,41 +4,113 @@
 <head>
   <title>ITEMS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://use.fontawesome.com/2ddc4a0f9c.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <style>
+    /* Add custom styles for the filter */
+    #itemSelect {
+      background-color: #f8f9fa; /* Light gray background */
+      border: 1px solid #ced4da; /* Gray border */
+      color: #495057; /* Dark gray text color */
+      padding: 10px; /* Add some padding */
+      margin-top: 20px; /* Add margin to separate filter from the items */
+    }
+
+    #itemDetails {
+      margin-top: 20px; /* Add margin to separate details from the filter */
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
-        <H1>LIST DES ITEMS</H1>  
-          <div  id="items">
+    <h1>LIST DES ITEMS</h1>
+    <div id="items"></div>
+  </div>
+
+  <div class="container">
+    <h4 style="text-align: center;">Filtre des Items</h4>
+    <div class="row">
+      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="itemSelect">
+        <option value="Select an Item">Select an Item</option>
+      </select>
     </div>
   </div>
+
+  <div class="container">
+    <div id="itemDetails"></div>
   </div>
+
   <script>
-    url = "http://localhost/omeka/omeka-s/api/items";
-    getData(url);
+    // Original code for fetching and displaying items
+    const itemsUrl = "http://localhost/omeka/omeka-s/api/items";
+    getData(itemsUrl);
 
     function getData(url) {
       d3.queue()
         .defer(d3.json, url)
         .awaitAll(function (error, results) {
-          
           showItems(results[0]);
         });
     }
+
     function showItems(data) {
       let elem = d3.select('#items').selectAll(".elem").data(data).enter()
         .append("div").attr('class', 'elem col-sm-3');
-    
+
       let content = elem.append('div').attr('class', 'card-body');
       content
         .append('p').text((d) => "Id : " + d["@id"])
         .append('p').text((d) => "Titre : " + d["o:title"])
-        .append('p').text((d) => "Média : " + (d["o:media"][0] ? d["o:media"][0]["@id"] : "Aucun média")); // Ajustez ceci en fonction de votre structure de données réelle
+        .append('p').text((d) => "Média : " + (d["o:media"][0] ? d["o:media"][0]["@id"] : "Aucun média"));
     }
-    
+
+    // Code for the filter and item details
+    const apiUrl = "http://localhost/omeka/omeka-s/api/items";
+
+    function populateDropdown(url) {
+      d3.json(url, function (error, data) {
+        if (error) throw error;
+
+        const select = d3.select('#itemSelect');
+        const options = select.selectAll('option').data(data);
+
+        options.enter()
+          .append('option')
+          .attr('value', (d) => d["o:id"])
+          .text((d) => d["o:id"]);
+
+        options.exit().remove();
+      });
+    }
+
+    function showItemDetails(selectedId) {
+      const detailsDiv = d3.select('#itemDetails');
+      detailsDiv.html("");
+
+      if (selectedId !== "Select an Item") {
+        const selectedUrl = apiUrl + `/${selectedId}`;
+        d3.json(selectedUrl, function (error, itemData) {
+          if (error) throw error;
+
+          detailsDiv.append('h4').text(`Item ID: ${itemData["o:id"]}`);
+          detailsDiv.append('h3').text(`Title: ${itemData["o:title"]}`);
+          detailsDiv.append('h4').text(`Media: ${itemData["o:media"][0]["@id"]["o:title"]}`);
+        });
+      }
+    }
+
+    populateDropdown(apiUrl);
+
+    d3.select('#itemSelect').on('change', function () {
+      const selectedId = this.value;
+      showItemDetails(selectedId);
+    });
   </script>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
@@ -49,3 +121,5 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
 </body>
+
+</html>
